@@ -1,10 +1,7 @@
--- TANTUNI Ultimate Modern Dashboard (Güncellenmiş Sürüm)
+-- TANTUNI Ultimate Modern Dashboard (Hatası Giderilmiş Final Sürüm)
 local CoreGui = game:GetService("CoreGui")
 local UserInputService = game:GetService("UserInputService")
 local Players = game:GetService("Players")
-local MarketplaceService = game:GetService("MarketplaceService")
-local TextService = game:GetService("TextService")
-local RunService = game:GetService("RunService")
 local LocalPlayer = Players.LocalPlayer
 
 -- Önceki kalıntıları temizle
@@ -122,7 +119,7 @@ local WelcomeText = Instance.new("TextLabel")
 WelcomeText.Size = UDim2.new(0, 400, 0, 24)
 WelcomeText.Position = UDim2.new(0, 25, 0, 18)
 WelcomeText.BackgroundTransparency = 1
-WelcomeText.Text = "Welcome home, " .. LocalPlayer.Name
+WelcomeText.Text = "Welcome home, " .. tostring(LocalPlayer.Name)
 WelcomeText.TextColor3 = Color3.fromRGB(255, 255, 255)
 WelcomeText.TextSize = 16
 WelcomeText.Font = Enum.Font.GothamBold
@@ -142,8 +139,8 @@ SubText.Parent = MainContainer
 
 -- Sağ Üst Saat Göstergesi
 local ClockLabel = Instance.new("TextLabel")
-ClockLabel.Size = UDim2.new(0, 100, 0, 30)
-ClockLabel.Position = UDim2.new(1, -125, 0, 24)
+ClockLabel.Size = UDim2.new(0, 120, 0, 30)
+ClockLabel.Position = UDim2.new(1, -135, 0, 24)
 ClockLabel.BackgroundTransparency = 1
 ClockLabel.TextColor3 = Color3.fromRGB(240, 240, 255)
 ClockLabel.TextSize = 13
@@ -207,7 +204,7 @@ FlySub.TextSize = 10
 FlySub.Font = Enum.Font.Gotham
 FlySub.Parent = FlyBox
 
--- 2. Bypasser Kutusu (Emojili ve 'Bypasser' yazılı)
+-- 2. Bypasser Kutusu
 local BypassBox = Instance.new("Frame")
 BypassBox.Size = UDim2.new(0.32, -6, 1, -14)
 BypassBox.Position = UDim2.new(0.34, 0, 0, 7)
@@ -290,7 +287,9 @@ local AvatarImage = Instance.new("ImageLabel")
 AvatarImage.Size = UDim2.new(0, 65, 0, 65)
 AvatarImage.Position = UDim2.new(0.5, -32, 0, 18)
 AvatarImage.BackgroundTransparency = 1
-AvatarImage.Image = Players:GetUserThumbnailAsync(LocalPlayer.UserId, Enum.ThumbnailType.HeadShot, Enum.ThumbnailSize.Size150x150)
+pcall(function()
+    AvatarImage.Image = Players:GetUserThumbnailAsync(LocalPlayer.UserId, Enum.ThumbnailType.HeadShot, Enum.ThumbnailSize.Size150x150)
+end)
 AvatarImage.Parent = ProfileCard
 
 local AvatarCorner = Instance.new("UICorner")
@@ -316,7 +315,7 @@ local NameLabel = Instance.new("TextLabel")
 NameLabel.Size = UDim2.new(1, 0, 0, 22)
 NameLabel.Position = UDim2.new(0, 0, 0, 90)
 NameLabel.BackgroundTransparency = 1
-NameLabel.Text = LocalPlayer.Name
+NameLabel.Text = tostring(LocalPlayer.Name)
 NameLabel.TextColor3 = Color3.fromRGB(255, 255, 255)
 NameLabel.TextSize = 13
 NameLabel.Font = Enum.Font.GothamBold
@@ -326,7 +325,7 @@ local TagLabel = Instance.new("TextLabel")
 TagLabel.Size = UDim2.new(1, 0, 0, 16)
 TagLabel.Position = UDim2.new(0, 0, 0, 110)
 TagLabel.BackgroundTransparency = 1
-TagLabel.Text = "@" .. LocalPlayer.Name
+TagLabel.Text = "@" .. tostring(LocalPlayer.Name)
 TagLabel.TextColor3 = Color3.fromRGB(160, 150, 185)
 TagLabel.TextSize = 10
 TagLabel.Font = Enum.Font.Gotham
@@ -382,7 +381,7 @@ local FriendActivityTitle = Instance.new("TextLabel")
 FriendActivityTitle.Size = UDim2.new(1, -20, 0, 24)
 FriendActivityTitle.Position = UDim2.new(0, 12, 0, 10)
 FriendActivityTitle.BackgroundTransparency = 1
-FriendActivityTitle.Text = "Arkadaş Aktivitesi" -- Türkçeleştirildi
+FriendActivityTitle.Text = "Arkadaş Aktivitesi"
 FriendActivityTitle.TextColor3 = Color3.fromRGB(220, 220, 240)
 FriendActivityTitle.TextSize = 12
 FriendActivityTitle.Font = Enum.Font.GothamBold
@@ -408,10 +407,10 @@ local function updateFriends()
         if child:IsA("Frame") then child:Destroy() end
     end
     
-    -- ÖNCE KENDİ OYUNUMUZU EN ÜSTE EKLEYELİM
+    -- Kendi Oyunumuz (En Üstte)
     local customGameFrame = Instance.new("Frame")
     customGameFrame.Size = UDim2.new(1, 0, 0, 42)
-    customGameFrame.BackgroundColor3 = Color3.fromRGB(45, 25, 75) -- Farklı özel renk vurgusu
+    customGameFrame.BackgroundColor3 = Color3.fromRGB(45, 25, 75)
     customGameFrame.BackgroundTransparency = 0.2
     customGameFrame.BorderSizePixel = 0
     customGameFrame.Parent = FriendScroll
@@ -432,7 +431,7 @@ local function updateFriends()
     cgName.Size = UDim2.new(1, -45, 0, 16)
     cgName.Position = UDim2.new(0, 42, 0, 5)
     cgName.BackgroundTransparency = 1
-    cgName.Text = "Tantuni Project (Bizim Oyun)"
+    cgName.Text = "Tantuni Project"
     cgName.TextColor3 = Color3.fromRGB(255, 200, 255)
     cgName.TextSize = 11
     cgName.Font = Enum.Font.GothamBold
@@ -450,7 +449,7 @@ local function updateFriends()
     cgStatus.TextXAlignment = Enum.TextXAlignment.Left
     cgStatus.Parent = customGameFrame
 
-    -- ARKADAŞLARI LİSTELE
+    -- Arkadaşları Listele
     local success, pages = pcall(function()
         return LocalPlayer:GetFriendsOnline()
     end)
@@ -474,10 +473,9 @@ local function updateFriends()
             fAvatar.Size = UDim2.new(0, 28, 0, 28)
             fAvatar.Position = UDim2.new(0, 8, 0.5, -14)
             fAvatar.BackgroundTransparency = 1
-            local thumbSuccess, thumbImg = pcall(function()
-                return Players:GetUserThumbnailAsync(friend.VisitorId, Enum.ThumbnailType.HeadShot, Enum.ThumbnailSize.Size100x100)
+            pcall(function()
+                fAvatar.Image = Players:GetUserThumbnailAsync(friend.VisitorId, Enum.ThumbnailType.HeadShot, Enum.ThumbnailSize.Size100x100)
             end)
-            fAvatar.Image = thumbSuccess and thumbImg or ""
             fAvatar.Parent = fFrame
             
             local fAvatarCorner = Instance.new("UICorner")
@@ -488,7 +486,7 @@ local function updateFriends()
             fName.Size = UDim2.new(1, -45, 0, 16)
             fName.Position = UDim2.new(0, 42, 0, 5)
             fName.BackgroundTransparency = 1
-            fName.Text = friend.UserName
+            fName.Text = tostring(friend.UserName or "Bilinmeyen")
             fName.TextColor3 = Color3.fromRGB(240, 240, 255)
             fName.TextSize = 11
             fName.Font = Enum.Font.GothamBold
@@ -499,7 +497,7 @@ local function updateFriends()
             fGame.Size = UDim2.new(1, -45, 0, 14)
             fGame.Position = UDim2.new(0, 42, 0, 21)
             fGame.BackgroundTransparency = 1
-            fGame.Text = friend.Location ~= "" and friend.Location or "Oyunda"
+            fGame.Text = tostring(friend.Location ~= "" and friend.Location or "Oyunda")
             fGame.TextColor3 = Color3.fromRGB(170, 160, 200)
             fGame.TextSize = 10
             fGame.Font = Enum.Font.Gotham
