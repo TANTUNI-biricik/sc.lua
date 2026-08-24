@@ -1,7 +1,8 @@
--- TANTUNI Roblox Particle Hacker Background UI
+-- TANTUNI Smart Activity UI (Aktif Oyun & Arkadaş Aktifliği)
 local CoreGui = game:GetService("CoreGui")
 local UserInputService = game:GetService("UserInputService")
 local Players = game:GetService("Players")
+local MarketplaceService = game:GetService("MarketplaceService")
 local LocalPlayer = Players.LocalPlayer
 
 -- Önceki kalıntıları temizle
@@ -113,37 +114,6 @@ local MainStroke = Instance.new("UIStroke")
 MainStroke.Color = Color3.fromRGB(160, 70, 255)
 MainStroke.Transparency = 0.3
 MainStroke.Parent = MainContainer
-
--- HACKER / YILDIZ EFEKTİ (Arka Planda Akıp Giden Noktalar)
--- UI içinde native parçacık simülasyonu için şık bir ızgara/yıldız katmanı oluşturuyoruz
-local EffectHolder = Instance.new("Folder")
-EffectHolder.Name = "HackerStars"
-EffectHolder.Parent = MainContainer
-
--- Rastgele parlayan sabit ve yavaşça yukarı süzülen 15 tane şık hacker yıldızı
-for i = 1, 15 do
-    local star = Instance.new("Frame")
-    star.Size = UDim2.new(0, math.random(2, 3), 0, math.random(2, 3))
-    star.Position = UDim2.new(math.random(5, 95)/100, 0, math.random(5, 95)/100, 0)
-    star.BackgroundColor3 = Color3.fromRGB(200, 130, 255)
-    star.BackgroundTransparency = math.random(3, 7) / 10
-    star.BorderSizePixel = 0
-    star.Parent = EffectHolder
-    
-    local starCorner = Instance.new("UICorner")
-    starCorner.CornerRadius = UDim.new(1, 0)
-    starCorner.Parent = star
-    
-    -- Tween yerine basit bir yerinde parlayıp sönme / süzülme hissi için Loop
-    task.spawn(function()
-        while star and star.Parent do
-            local randomTime = math.random(2, 5)
-            local goalTransparency = math.random(2, 9) / 10
-            game:GetService("TweenService"):Create(star, TweenInfo.new(randomTime), {BackgroundTransparency = goalTransparency}):Play()
-            task.wait(randomTime)
-        end
-    end)
-end
 
 -- Üst Bilgi Satırı
 local WelcomeText = Instance.new("TextLabel")
@@ -260,7 +230,6 @@ local ProfileCorner = Instance.new("UICorner")
 ProfileCorner.CornerRadius = UDim.new(0, 10)
 ProfileCorner.Parent = ProfileCard
 
--- Gerçek Profil Resmi
 local AvatarImage = Instance.new("ImageLabel")
 AvatarImage.Size = UDim2.new(0, 70, 0, 70)
 AvatarImage.Position = UDim2.new(0.5, -35, 0, 25)
@@ -292,7 +261,7 @@ TagLabel.TextSize = 11
 TagLabel.Font = Enum.Font.Gotham
 TagLabel.Parent = ProfileCard
 
--- Sağ Aktivite Paneli
+-- SAĞ AKTİVİTE PANELİ (Aktif Oyun & Arkadaş Aktifliği)
 local ActivityCard = Instance.new("Frame")
 ActivityCard.Size = UDim2.new(0.47, 0, 0, 210)
 ActivityCard.Position = UDim2.new(0.53, -4, 0, 170)
@@ -305,16 +274,121 @@ local ActivityCorner = Instance.new("UICorner")
 ActivityCorner.CornerRadius = UDim.new(0, 10)
 ActivityCorner.Parent = ActivityCard
 
-local ActivityTitle = Instance.new("TextLabel")
-ActivityTitle.Size = UDim2.new(1, -20, 0, 30)
-ActivityTitle.Position = UDim2.new(0, 15, 0, 15)
-ActivityTitle.BackgroundTransparency = 1
-ActivityTitle.Text = "Friend Activity"
-ActivityTitle.TextColor3 = Color3.fromRGB(255, 255, 255)
-ActivityTitle.TextSize = 14
-ActivityTitle.Font = Enum.Font.GothamBold
-ActivityTitle.TextXAlignment = Enum.TextXAlignment.Left
-ActivityTitle.Parent = ActivityCard
+-- 1. Kısım: Aktif Oyun (Senin Oynadığın Oyun)
+local CurrentGameTitle = Instance.new("TextLabel")
+CurrentGameTitle.Size = UDim2.new(1, -20, 0, 22)
+CurrentGameTitle.Position = UDim2.new(0, 15, 0, 12)
+CurrentGameTitle.BackgroundTransparency = 1
+CurrentGameTitle.Text = "Aktif Oyun"
+CurrentGameTitle.TextColor3 = Color3.fromRGB(190, 120, 255)
+CurrentGameTitle.TextSize = 13
+CurrentGameTitle.Font = Enum.Font.GothamBold
+CurrentGameTitle.TextXAlignment = Enum.TextXAlignment.Left
+CurrentGameTitle.Parent = ActivityCard
+
+local CurrentGameName = Instance.new("TextLabel")
+CurrentGameName.Size = UDim2.new(1, -20, 0, 20)
+CurrentGameName.Position = UDim2.new(0, 15, 0, 32)
+CurrentGameName.BackgroundTransparency = 1
+CurrentGameName.TextColor3 = Color3.fromRGB(255, 255, 255)
+CurrentGameName.TextSize = 12
+CurrentGameName.Font = Enum.Font.GothamMedium
+CurrentGameName.TextXAlignment = Enum.TextXAlignment.Left
+CurrentGameName.Parent = ActivityCard
+
+-- Oyun adını otomatik çek
+task.spawn(function()
+    local success, info = pcall(function()
+        return MarketplaceService:GetProductInfo(game.PlaceId)
+    end)
+    if success and info and info.Name then
+        CurrentGameName.Text = info.Name
+    else
+        CurrentGameName.Text = "Roblox Experience"
+    end
+end)
+
+-- Ayırıcı Çizgi
+local Divider = Instance.new("Frame")
+Divider.Size = UDim2.new(1, -30, 0, 1)
+Divider.Position = UDim2.new(0, 15, 0, 62)
+Divider.BackgroundColor3 = Color3.fromRGB(80, 50, 120)
+Divider.BackgroundTransparency = 0.5
+Divider.BorderSizePixel = 0
+Divider.Parent = ActivityCard
+
+-- 2. Kısım: Arkadaş Aktifliği Başlığı
+local FriendActivityTitle = Instance.new("TextLabel")
+FriendActivityTitle.Size = UDim2.new(1, -20, 0, 22)
+FriendActivityTitle.Position = UDim2.new(0, 15, 0, 72)
+FriendActivityTitle.BackgroundTransparency = 1
+FriendActivityTitle.Text = "Arkadaş Aktifliği"
+FriendActivityTitle.TextColor3 = Color3.fromRGB(190, 120, 255)
+FriendActivityTitle.TextSize = 13
+FriendActivityTitle.Font = Enum.Font.GothamBold
+FriendActivityTitle.TextXAlignment = Enum.TextXAlignment.Left
+FriendActivityTitle.Parent = ActivityCard
+
+-- Arkadaşların durumunu listeleyecek Scroll alanı
+local FriendScroll = Instance.new("ScrollingFrame")
+FriendScroll.Size = UDim2.new(1, -10, 0, 110)
+FriendScroll.Position = UDim2.new(0, 5, 0, 96)
+FriendScroll.BackgroundTransparency = 1
+FriendScroll.BorderSizePixel = 0
+FriendScroll.CanvasSize = UDim2.new(0, 0, 0, 0)
+FriendScroll.ScrollBarThickness = 3
+FriendScroll.Parent = ActivityCard
+
+local UIListLayout = Instance.new("UIListLayout")
+UIListLayout.SortOrder = Enum.SortOrder.LayoutOrder
+UIListLayout.Padding = UDim.new(0, 6)
+UIListLayout.Parent = FriendScroll
+
+-- Arkadaşları tara ve yazdır
+local function updateFriends()
+    for _, child in ipairs(FriendScroll:GetChildren()) do
+        if child:IsA("Frame") then child:Destroy() end
+    end
+    
+    local success, pages = pcall(function()
+        return LocalPlayer:GetFriendsOnline()
+    end)
+    
+    if success and pages then
+        local count = 0
+        for _, friend in ipairs(pages) do
+            count = count + 1
+            local fFrame = Instance.new("Frame")
+            fFrame.Size = UDim2.new(1, -5, 0, 28)
+            fFrame.BackgroundTransparency = 1
+            fFrame.Parent = FriendScroll
+            
+            local fName = Instance.new("TextLabel")
+            fName.Size = UDim2.new(0.45, 0, 1, 0)
+            fName.BackgroundTransparency = 1
+            fName.Text = friend.UserName
+            fName.TextColor3 = Color3.fromRGB(240, 240, 255)
+            fName.TextSize = 11
+            fName.Font = Enum.Font.GothamBold
+            fName.TextXAlignment = Enum.TextXAlignment.Left
+            fName.Parent = fFrame
+            
+            local fGame = Instance.new("TextLabel")
+            fGame.Size = UDim2.new(0.55, 0, 1, 0)
+            fGame.Position = UDim2.new(0.45, 0, 0, 0)
+            fGame.BackgroundTransparency = 1
+            fGame.Text = friend.Location or "Oyunda"
+            fGame.TextColor3 = Color3.fromRGB(170, 160, 190)
+            fGame.TextSize = 10
+            fGame.Font = Enum.Font.Gotham
+            fGame.TextXAlignment = Enum.TextXAlignment.Right
+            fGame.Parent = fFrame
+        end
+        FriendScroll.CanvasSize = UDim2.new(0, 0, 0, count * 34)
+    end
+end
+
+task.spawn(updateFriends)
 
 -- --- SÜRÜKLE-BIRAK ---
 local dragging, dragInput, mousePos, framePos
