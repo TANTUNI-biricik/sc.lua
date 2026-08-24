@@ -1,4 +1,4 @@
--- TANTUNI Ultimate Modern Dashboard (Hatası Giderilmiş Final Sürüm)
+-- TANTUNI Ultimate Modern Dashboard (Menü İçi Entegre Sürüm)
 local CoreGui = game:GetService("CoreGui")
 local UserInputService = game:GetService("UserInputService")
 local Players = game:GetService("Players")
@@ -97,8 +97,8 @@ MenuGui.Name = "TantuniMenu"
 MenuGui.Parent = CoreGui
 
 local MainContainer = Instance.new("Frame")
-MainContainer.Size = UDim2.new(0, 680, 0, 460)
-MainContainer.Position = UDim2.new(0.5, -340, 0.5, -230)
+MainContainer.Size = UDim2.new(0, 680, 0, 480) -- Boyut navigasyon için biraz uzatıldı
+MainContainer.Position = UDim2.new(0.5, -340, 0.5, -240)
 MainContainer.BackgroundColor3 = Color3.fromRGB(14, 8, 24)
 MainContainer.BackgroundTransparency = 0.1
 MainContainer.BorderSizePixel = 0
@@ -456,6 +456,7 @@ local function updateFriends()
     
     local count = 1
     if success and pages then
+        foreach = ipairs(pages) -- uyumlu olması için ipairs kullanıldı
         for _, friend in ipairs(pages) do
             count = count + 1
             local fFrame = Instance.new("Frame")
@@ -511,17 +512,17 @@ end
 task.spawn(updateFriends)
 
 
--- 3. EN ALTTAKİ NAVİGASYON ŞERİDİ
+-- 3. EN ALTTAKİ NAVİGASYON ŞERİDİ (ARTIK MENÜNÜN İÇİNDE - EN ALTTA SABİT)
 local BottomNav = Instance.new("Frame")
-BottomNav.Size = UDim2.new(0, 560, 0, 52)
-BottomNav.Position = UDim2.new(0.5, -280, 1, -62)
+BottomNav.Size = UDim2.new(1, -50, 0, 44)
+BottomNav.Position = UDim2.new(0, 25, 1, -54)
 BottomNav.BackgroundColor3 = Color3.fromRGB(18, 10, 32)
 BottomNav.BackgroundTransparency = 0.2
 BottomNav.BorderSizePixel = 0
-BottomNav.Parent = MenuGui
+BottomNav.Parent = MainContainer
 
 local NavCorner = Instance.new("UICorner")
-NavCorner.CornerRadius = UDim.new(0, 12)
+NavCorner.CornerRadius = UDim.new(0, 10)
 NavCorner.Parent = BottomNav
 
 local NavStroke = Instance.new("UIStroke")
@@ -530,7 +531,7 @@ NavStroke.Transparency = 0.3
 NavStroke.Parent = BottomNav
 
 local icons = {"🧭", "💻", "👥", "🎵", "📁", "⚙️", "☁️"}
-local iconWidth = 560 / #icons
+local iconWidth = (680 - 50) / #icons
 
 for i, iconSymbol in ipairs(icons) do
     local btn = Instance.new("TextButton")
@@ -584,6 +585,5 @@ UserInputService.InputBegan:Connect(function(input, gameProcessed)
     if not gameProcessed and input.KeyCode == Enum.KeyCode.Delete then
         isOpen = not isOpen
         MainContainer.Visible = isOpen
-        BottomNav.Visible = isOpen
     end
 end)
