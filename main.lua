@@ -1,4 +1,4 @@
--- TANTUNI Smart Activity UI v4 (Fly - Voicer - ESP)
+-- TANTUNI Smart Activity UI v5 (3'lü Yan Yana: Fly - Voicer - ESP)
 local CoreGui = game:GetService("CoreGui")
 local UserInputService = game:GetService("UserInputService")
 local Players = game:GetService("Players")
@@ -138,7 +138,7 @@ SubText.Font = Enum.Font.GothamBold
 SubText.TextXAlignment = Enum.TextXAlignment.Left
 SubText.Parent = MainContainer
 
--- Üst Panel (Fly / Voicer / ESP Üçlüsü)
+-- Üst Panel (Fly - Voicer - ESP Tam Boyut Üçlü Şerit)
 local TopPanel = Instance.new("Frame")
 TopPanel.Size = UDim2.new(1, -50, 0, 75)
 TopPanel.Position = UDim2.new(0, 25, 0, 80)
@@ -153,7 +153,7 @@ TopPanelCorner.Parent = TopPanel
 
 -- 1. Fly Kutusu (Sol)
 local FlyBox = Instance.new("Frame")
-FlyBox.Size = UDim2.new(0.31, 0, 1, -16)
+FlyBox.Size = UDim2.new(0.32, -6, 1, -16)
 FlyBox.Position = UDim2.new(0, 8, 0, 8)
 FlyBox.BackgroundColor3 = Color3.fromRGB(45, 25, 75)
 FlyBox.BackgroundTransparency = 0.2
@@ -186,8 +186,8 @@ FlySub.Parent = FlyBox
 
 -- 2. Voicer Kutusu (Orta)
 local VoicerBox = Instance.new("Frame")
-VoicerBox.Size = UDim2.new(0.31, 0, 1, -16)
-VoicerBox.Position = UDim2.new(0.345, 0, 0, 8)
+VoicerBox.Size = UDim2.new(0.32, -6, 1, -16)
+VoicerBox.Position = UDim2.new(0.34, 0, 0, 8)
 VoicerBox.BackgroundColor3 = Color3.fromRGB(45, 25, 75)
 VoicerBox.BackgroundTransparency = 0.2
 VoicerBox.BorderSizePixel = 0
@@ -219,8 +219,8 @@ VoicerSub.Parent = VoicerBox
 
 -- 3. ESP Kutusu (Sağ)
 local EspBox = Instance.new("Frame")
-EspBox.Size = UDim2.new(0.31, 0, 1, -16)
-EspBox.Position = UDim2.new(0.69, 0, 0, 8)
+EspBox.Size = UDim2.new(0.32, -6, 1, -16)
+EspBox.Position = UDim2.new(0.68, 0, 0, 8)
 EspBox.BackgroundColor3 = Color3.fromRGB(45, 25, 75)
 EspBox.BackgroundTransparency = 0.2
 EspBox.BorderSizePixel = 0
