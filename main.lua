@@ -1,4 +1,4 @@
--- TANTUNI Smart Activity UI v2 (Aktif Oyun & Arkadaş Aktifliği)
+-- TANTUNI Smart Activity UI v3 (Gelişmiş Arkadaş Oyun İsmi Çözücü)
 local CoreGui = game:GetService("CoreGui")
 local UserInputService = game:GetService("UserInputService")
 local Players = game:GetService("Players")
@@ -344,7 +344,7 @@ UIListLayout.SortOrder = Enum.SortOrder.LayoutOrder
 UIListLayout.Padding = UDim.new(0, 4)
 UIListLayout.Parent = FriendScroll
 
--- Arkadaşları tara ve oyunlarıyla beraber listele
+-- Arkadaşları tara ve oyun adlarını çözüp listele
 local function updateFriends()
     for _, child in ipairs(FriendScroll:GetChildren()) do
         if child:IsA("Frame") then child:Destroy() end
@@ -384,12 +384,28 @@ local function updateFriends()
             fGame.Size = UDim2.new(1, -10, 0, 14)
             fGame.Position = UDim2.new(0, 5, 0, 16)
             fGame.BackgroundTransparency = 1
-            fGame.Text = friend.Location or "Oyunda"
+            fGame.Text = "Yükleniyor..."
             fGame.TextColor3 = Color3.fromRGB(180, 160, 210)
             fGame.TextSize = 10
             fGame.Font = Enum.Font.Gotham
             fGame.TextXAlignment = Enum.TextXAlignment.Left
             fGame.Parent = fFrame
+
+            -- Arkadaşın oynadığı oyunun gerçek adını çöz
+            task.spawn(function()
+                local gameName = "Oyunda"
+                if friend.PlaceId then
+                    local pSuccess, pInfo = pcall(function()
+                        return MarketplaceService:GetProductInfo(friend.PlaceId)
+                    end)
+                    if pSuccess and pInfo and pInfo.Name then
+                        gameName = pInfo.Name
+                    end
+                elseif friend.Location and friend.Location ~= "" then
+                    gameName = friend.Location
+                end
+                fGame.Text = gameName
+            end)
         end
         FriendScroll.CanvasSize = UDim2.new(0, 0, 0, count * 36)
     end
