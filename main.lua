@@ -1,7 +1,8 @@
--- TANTUNI Glassmorphism Mor Theme UI & Gerçek Profil Resmi
+-- TANTUNI Hacker Style Starfall UI
 local CoreGui = game:GetService("CoreGui")
 local UserInputService = game:GetService("UserInputService")
 local Players = game:GetService("Players")
+local RunService = game:GetService("RunService")
 local LocalPlayer = Players.LocalPlayer
 
 -- Önceki kalıntıları temizle
@@ -16,8 +17,8 @@ LoaderGui.Parent = CoreGui
 local LoaderFrame = Instance.new("Frame")
 LoaderFrame.Size = UDim2.new(0, 420, 0, 160)
 LoaderFrame.Position = UDim2.new(0.5, -210, 0.5, -80)
-LoaderFrame.BackgroundColor3 = Color3.fromRGB(35, 18, 55) -- Morumsu Cam Arkaplan
-LoaderFrame.BackgroundTransparency = 0.2
+LoaderFrame.BackgroundColor3 = Color3.fromRGB(20, 12, 35)
+LoaderFrame.BackgroundTransparency = 0.15
 LoaderFrame.BorderSizePixel = 0
 LoaderFrame.Parent = LoaderGui
 
@@ -66,7 +67,7 @@ StatusText.Parent = LoaderFrame
 local BarBg = Instance.new("Frame")
 BarBg.Size = UDim2.new(1, -40, 0, 6)
 BarBg.Position = UDim2.new(0, 20, 0, 115)
-BarBg.BackgroundColor3 = Color3.fromRGB(50, 25, 80)
+BarBg.BackgroundColor3 = Color3.fromRGB(40, 20, 70)
 BarBg.BorderSizePixel = 0
 BarBg.Parent = LoaderFrame
 
@@ -84,7 +85,6 @@ local BarFillCorner = Instance.new("UICorner")
 BarFillCorner.CornerRadius = UDim.new(1, 0)
 BarFillCorner.Parent = BarFill
 
--- Yükleme Animasyonu
 for i = 1, 100 do
     BarFill.Size = UDim2.new(i / 100, 0, 1, 0)
     task.wait(0.015)
@@ -92,7 +92,7 @@ end
 task.wait(0.3)
 LoaderGui:Destroy()
 
--- 2. ANA MENÜ (Cam Moru Efektli)
+-- 2. ANA MENÜ (Hacker Yıldız / Parçacık Efektli Arkaplan)
 local MenuGui = Instance.new("ScreenGui")
 MenuGui.Name = "TantuniMenu"
 MenuGui.Parent = CoreGui
@@ -100,9 +100,10 @@ MenuGui.Parent = CoreGui
 local MainContainer = Instance.new("Frame")
 MainContainer.Size = UDim2.new(0, 650, 0, 420)
 MainContainer.Position = UDim2.new(0.5, -325, 0.5, -210)
-MainContainer.BackgroundColor3 = Color3.fromRGB(28, 15, 45) -- Şık mor-cam arkaplan
-MainContainer.BackgroundTransparency = 0.25
+MainContainer.BackgroundColor3 = Color3.fromRGB(16, 10, 28)
+MainContainer.BackgroundTransparency = 0.15
 MainContainer.BorderSizePixel = 0
+MainContainer.ClipsDescendants = true -- Yıldızlar çerçeve dışına taşmasın
 MainContainer.Parent = MenuGui
 
 local MainCorner = Instance.new("UICorner")
@@ -113,6 +114,52 @@ local MainStroke = Instance.new("UIStroke")
 MainStroke.Color = Color3.fromRGB(160, 70, 255)
 MainStroke.Transparency = 0.3
 MainStroke.Parent = MainContainer
+
+-- HACKER YILDIZ / PARÇACIK SİSTEMİ (Arada süzülen yıldızlar)
+local StarsFolder = Instance.new("Folder")
+StarsFolder.Name = "StarEffect"
+StarsFolder.Parent = MainContainer
+
+math.randomseed(tick())
+local stars = {}
+for i = 1, 25 do -- Yıldız sayısı
+    local star = Instance.new("Frame")
+    star.Size = UDim2.new(0, math.random(2, 4), 0, math.random(2, 4))
+    star.Position = UDim2.new(math.random(), 0, math.random(), 0)
+    star.BackgroundColor3 = Color3.fromRGB(200, 150, 255)
+    star.BackgroundTransparency = math.random(20, 60) / 100
+    star.BorderSizePixel = 0
+    star.Parent = StarsFolder
+    
+    local corner = Instance.new("UICorner")
+    corner.CornerRadius = UDim.new(1, 0)
+    corner.Parent = star
+    
+    table.insert(stars, {
+        object = star,
+        speed = math.random(10, 30) / 10000, -- Akış hızı
+        opacitySpeed = math.random(5, 15) / 1000
+    })
+end
+
+-- Yıldızların hareket döngüsü
+local starConn
+starConn = RunService.RenderStepped:Connect(function()
+    if not MainContainer.Parent then
+        starConn:Disconnect()
+        return
+    end
+    for _, s in ipairs(stars) do
+        local pos = s.object.Position
+        local newY = pos.Y.Scale - s.speed
+        if newY < 0 then
+            newY = 1
+            s.object.Position = UDim2.new(math.random(), 0, 1, 0)
+        else
+            s.object.Position = UDim2.new(pos.X.Scale, 0, newY, 0)
+        end
+    end
+end)
 
 -- Üst Bilgi Satırı
 local WelcomeText = Instance.new("TextLabel")
@@ -141,7 +188,7 @@ SubText.Parent = MainContainer
 local TopPanel = Instance.new("Frame")
 TopPanel.Size = UDim2.new(1, -50, 0, 75)
 TopPanel.Position = UDim2.new(0, 25, 0, 80)
-TopPanel.BackgroundColor3 = Color3.fromRGB(40, 22, 65)
+TopPanel.BackgroundColor3 = Color3.fromRGB(30, 18, 50)
 TopPanel.BackgroundTransparency = 0.3
 TopPanel.BorderSizePixel = 0
 TopPanel.Parent = MainContainer
@@ -154,7 +201,7 @@ TopPanelCorner.Parent = TopPanel
 local FlyBox = Instance.new("Frame")
 FlyBox.Size = UDim2.new(0.47, 0, 1, -16)
 FlyBox.Position = UDim2.new(0, 8, 0, 8)
-FlyBox.BackgroundColor3 = Color3.fromRGB(55, 30, 85)
+FlyBox.BackgroundColor3 = Color3.fromRGB(45, 25, 75)
 FlyBox.BackgroundTransparency = 0.2
 FlyBox.BorderSizePixel = 0
 FlyBox.Parent = TopPanel
@@ -187,7 +234,7 @@ FlySub.Parent = FlyBox
 local EspBox = Instance.new("Frame")
 EspBox.Size = UDim2.new(0.47, 0, 1, -16)
 EspBox.Position = UDim2.new(0.53, -4, 0, 8)
-EspBox.BackgroundColor3 = Color3.fromRGB(55, 30, 85)
+EspBox.BackgroundColor3 = Color3.fromRGB(45, 25, 75)
 EspBox.BackgroundTransparency = 0.2
 EspBox.BorderSizePixel = 0
 EspBox.Parent = TopPanel
@@ -220,7 +267,7 @@ EspSub.Parent = EspBox
 local ProfileCard = Instance.new("Frame")
 ProfileCard.Size = UDim2.new(0.47, 0, 0, 210)
 ProfileCard.Position = UDim2.new(0, 25, 0, 170)
-ProfileCard.BackgroundColor3 = Color3.fromRGB(40, 22, 65)
+ProfileCard.BackgroundColor3 = Color3.fromRGB(30, 18, 50)
 ProfileCard.BackgroundTransparency = 0.3
 ProfileCard.BorderSizePixel = 0
 ProfileCard.Parent = MainContainer
@@ -229,7 +276,7 @@ local ProfileCorner = Instance.new("UICorner")
 ProfileCorner.CornerRadius = UDim.new(0, 10)
 ProfileCorner.Parent = ProfileCard
 
--- GERÇEK ROBLOX PROFİL RESMİ (Avatar Headshot)
+-- Gerçek Profil Resmi
 local AvatarImage = Instance.new("ImageLabel")
 AvatarImage.Size = UDim2.new(0, 70, 0, 70)
 AvatarImage.Position = UDim2.new(0.5, -35, 0, 25)
@@ -265,7 +312,7 @@ TagLabel.Parent = ProfileCard
 local ActivityCard = Instance.new("Frame")
 ActivityCard.Size = UDim2.new(0.47, 0, 0, 210)
 ActivityCard.Position = UDim2.new(0.53, -4, 0, 170)
-ActivityCard.BackgroundColor3 = Color3.fromRGB(40, 22, 65)
+ActivityCard.BackgroundColor3 = Color3.fromRGB(30, 18, 50)
 ActivityCard.BackgroundTransparency = 0.3
 ActivityCard.BorderSizePixel = 0
 ActivityCard.Parent = MainContainer
