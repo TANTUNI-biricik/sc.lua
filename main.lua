@@ -221,7 +221,7 @@ local BypassTitle = Instance.new("TextLabel")
 BypassTitle.Size = UDim2.new(1, 0, 0, 22)
 BypassTitle.Position = UDim2.new(0, 0, 0, 8)
 BypassTitle.BackgroundTransparency = 1
-BypassTitle.Text = "🎙️ Bypasser"
+BypassTitle.Text = "🎙️"
 BypassTitle.TextColor3 = Color3.fromRGB(255, 255, 255)
 BypassTitle.TextSize = 13
 BypassTitle.Font = Enum.Font.GothamBold
@@ -442,7 +442,7 @@ local function updateFriends()
     cgStatus.Size = UDim2.new(1, -45, 0, 14)
     cgStatus.Position = UDim2.new(0, 42, 0, 21)
     cgStatus.BackgroundTransparency = 1
-    cgStatus.Text = "Aktif • Geliştirme Aşamasında"
+    cgStatus.Text = "Bypasser • Geliştirme Aşamasında"
     cgStatus.TextColor3 = Color3.fromRGB(180, 150, 220)
     cgStatus.TextSize = 10
     cgStatus.Font = Enum.Font.Gotham
