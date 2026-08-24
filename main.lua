@@ -1,4 +1,4 @@
--- TANTUNI Smart Activity UI v3 (Gelişmiş Arkadaş Oyun İsmi Çözücü)
+-- TANTUNI Smart Activity UI v4 (Fly - Voicer - ESP)
 local CoreGui = game:GetService("CoreGui")
 local UserInputService = game:GetService("UserInputService")
 local Players = game:GetService("Players")
@@ -138,7 +138,7 @@ SubText.Font = Enum.Font.GothamBold
 SubText.TextXAlignment = Enum.TextXAlignment.Left
 SubText.Parent = MainContainer
 
--- Üst Panel (Fly / ESP)
+-- Üst Panel (Fly / Voicer / ESP Üçlüsü)
 local TopPanel = Instance.new("Frame")
 TopPanel.Size = UDim2.new(1, -50, 0, 75)
 TopPanel.Position = UDim2.new(0, 25, 0, 80)
@@ -151,9 +151,9 @@ local TopPanelCorner = Instance.new("UICorner")
 TopPanelCorner.CornerRadius = UDim.new(0, 10)
 TopPanelCorner.Parent = TopPanel
 
--- Fly Kutusu
+-- 1. Fly Kutusu (Sol)
 local FlyBox = Instance.new("Frame")
-FlyBox.Size = UDim2.new(0.47, 0, 1, -16)
+FlyBox.Size = UDim2.new(0.31, 0, 1, -16)
 FlyBox.Position = UDim2.new(0, 8, 0, 8)
 FlyBox.BackgroundColor3 = Color3.fromRGB(45, 25, 75)
 FlyBox.BackgroundTransparency = 0.2
@@ -184,10 +184,43 @@ FlySub.TextSize = 11
 FlySub.Font = Enum.Font.Gotham
 FlySub.Parent = FlyBox
 
--- ESP Kutusu
+-- 2. Voicer Kutusu (Orta)
+local VoicerBox = Instance.new("Frame")
+VoicerBox.Size = UDim2.new(0.31, 0, 1, -16)
+VoicerBox.Position = UDim2.new(0.345, 0, 0, 8)
+VoicerBox.BackgroundColor3 = Color3.fromRGB(45, 25, 75)
+VoicerBox.BackgroundTransparency = 0.2
+VoicerBox.BorderSizePixel = 0
+VoicerBox.Parent = TopPanel
+
+local VoicerCorner = Instance.new("UICorner")
+VoicerCorner.CornerRadius = UDim.new(0, 8)
+VoicerCorner.Parent = VoicerBox
+
+local VoicerTitle = Instance.new("TextLabel")
+VoicerTitle.Size = UDim2.new(1, 0, 0, 25)
+VoicerTitle.Position = UDim2.new(0, 0, 0, 10)
+VoicerTitle.BackgroundTransparency = 1
+VoicerTitle.Text = "Voicer"
+VoicerTitle.TextColor3 = Color3.fromRGB(255, 255, 255)
+VoicerTitle.TextSize = 14
+VoicerTitle.Font = Enum.Font.GothamBold
+VoicerTitle.Parent = VoicerBox
+
+local VoicerSub = Instance.new("TextLabel")
+VoicerSub.Size = UDim2.new(1, 0, 0, 20)
+VoicerSub.Position = UDim2.new(0, 0, 0, 32)
+VoicerSub.BackgroundTransparency = 1
+VoicerSub.Text = "Aktif"
+VoicerSub.TextColor3 = Color3.fromRGB(180, 170, 200)
+VoicerSub.TextSize = 11
+VoicerSub.Font = Enum.Font.Gotham
+VoicerSub.Parent = VoicerBox
+
+-- 3. ESP Kutusu (Sağ)
 local EspBox = Instance.new("Frame")
-EspBox.Size = UDim2.new(0.47, 0, 1, -16)
-EspBox.Position = UDim2.new(0.53, -4, 0, 8)
+EspBox.Size = UDim2.new(0.31, 0, 1, -16)
+EspBox.Position = UDim2.new(0.69, 0, 0, 8)
 EspBox.BackgroundColor3 = Color3.fromRGB(45, 25, 75)
 EspBox.BackgroundTransparency = 0.2
 EspBox.BorderSizePixel = 0
@@ -296,7 +329,6 @@ CurrentGameName.Font = Enum.Font.GothamMedium
 CurrentGameName.TextXAlignment = Enum.TextXAlignment.Left
 CurrentGameName.Parent = ActivityCard
 
--- Oyun adını otomatik çek
 task.spawn(function()
     local success, info = pcall(function()
         return MarketplaceService:GetProductInfo(game.PlaceId)
@@ -329,7 +361,6 @@ FriendActivityTitle.Font = Enum.Font.GothamBold
 FriendActivityTitle.TextXAlignment = Enum.TextXAlignment.Left
 FriendActivityTitle.Parent = ActivityCard
 
--- Arkadaşların durumunu listeleyecek Scroll alanı
 local FriendScroll = Instance.new("ScrollingFrame")
 FriendScroll.Size = UDim2.new(1, -10, 0, 125)
 FriendScroll.Position = UDim2.new(0, 5, 0, 80)
@@ -344,7 +375,6 @@ UIListLayout.SortOrder = Enum.SortOrder.LayoutOrder
 UIListLayout.Padding = UDim.new(0, 4)
 UIListLayout.Parent = FriendScroll
 
--- Arkadaşları tara ve oyun adlarını çözüp listele
 local function updateFriends()
     for _, child in ipairs(FriendScroll:GetChildren()) do
         if child:IsA("Frame") then child:Destroy() end
@@ -384,28 +414,12 @@ local function updateFriends()
             fGame.Size = UDim2.new(1, -10, 0, 14)
             fGame.Position = UDim2.new(0, 5, 0, 16)
             fGame.BackgroundTransparency = 1
-            fGame.Text = "Yükleniyor..."
+            fGame.Text = "Oyunda"
             fGame.TextColor3 = Color3.fromRGB(180, 160, 210)
             fGame.TextSize = 10
             fGame.Font = Enum.Font.Gotham
             fGame.TextXAlignment = Enum.TextXAlignment.Left
             fGame.Parent = fFrame
-
-            -- Arkadaşın oynadığı oyunun gerçek adını çöz
-            task.spawn(function()
-                local gameName = "Oyunda"
-                if friend.PlaceId then
-                    local pSuccess, pInfo = pcall(function()
-                        return MarketplaceService:GetProductInfo(friend.PlaceId)
-                    end)
-                    if pSuccess and pInfo and pInfo.Name then
-                        gameName = pInfo.Name
-                    end
-                elseif friend.Location and friend.Location ~= "" then
-                    gameName = friend.Location
-                end
-                fGame.Text = gameName
-            end)
         end
         FriendScroll.CanvasSize = UDim2.new(0, 0, 0, count * 36)
     end
