@@ -1,4 +1,4 @@
--- TANTUNI Ultimate Modern Dashboard (Görsel Tasarıma Tam Uyumlu)
+-- TANTUNI Ultimate Modern Dashboard (Güncellenmiş Sürüm)
 local CoreGui = game:GetService("CoreGui")
 local UserInputService = game:GetService("UserInputService")
 local Players = game:GetService("Players")
@@ -117,7 +117,7 @@ MainStroke.Color = Color3.fromRGB(160, 70, 255)
 MainStroke.Transparency = 0.25
 MainStroke.Parent = MainContainer
 
--- Üst Bilgi Satırı (İsim + Alt Kısım + Sağ Üst Saat)
+-- Üst Bilgi Satırı
 local WelcomeText = Instance.new("TextLabel")
 WelcomeText.Size = UDim2.new(0, 400, 0, 24)
 WelcomeText.Position = UDim2.new(0, 25, 0, 18)
@@ -151,7 +151,6 @@ ClockLabel.Font = Enum.Font.GothamBold
 ClockLabel.TextXAlignment = Enum.TextXAlignment.Right
 ClockLabel.Parent = MainContainer
 
--- Saati Güncelleyen Fonksiyon
 task.spawn(function()
     while true do
         local date = os.date("*t")
@@ -208,7 +207,7 @@ FlySub.TextSize = 10
 FlySub.Font = Enum.Font.Gotham
 FlySub.Parent = FlyBox
 
--- 2. Bypasser Kutusu (Orta - Mikrofon ikonlu)
+-- 2. Bypasser Kutusu (Emojili ve 'Bypasser' yazılı)
 local BypassBox = Instance.new("Frame")
 BypassBox.Size = UDim2.new(0.32, -6, 1, -14)
 BypassBox.Position = UDim2.new(0.34, 0, 0, 7)
@@ -235,7 +234,7 @@ local BypassSub = Instance.new("TextLabel")
 BypassSub.Size = UDim2.new(1, 0, 0, 18)
 BypassSub.Position = UDim2.new(0, 0, 0, 28)
 BypassSub.BackgroundTransparency = 1
-BypassSub.Text = "Aktif"
+BypassSub.Text = "Bypasser"
 BypassSub.TextColor3 = Color3.fromRGB(180, 170, 200)
 BypassSub.TextSize = 10
 BypassSub.Font = Enum.Font.Gotham
@@ -274,7 +273,7 @@ EspSub.TextSize = 10
 EspSub.Font = Enum.Font.Gotham
 EspSub.Parent = EspBox
 
--- SOL PROFİL KARTI (Avatar + İsim + Chat Kutusu)
+-- SOL PROFİL KARTI
 local ProfileCard = Instance.new("Frame")
 ProfileCard.Size = UDim2.new(0.48, 0, 0, 235)
 ProfileCard.Position = UDim2.new(0, 25, 0, 148)
@@ -287,7 +286,6 @@ local ProfileCorner = Instance.new("UICorner")
 ProfileCorner.CornerRadius = UDim.new(0, 10)
 ProfileCorner.Parent = ProfileCard
 
--- Avatar Çerçevesi ve Çemberi
 local AvatarImage = Instance.new("ImageLabel")
 AvatarImage.Size = UDim2.new(0, 65, 0, 65)
 AvatarImage.Position = UDim2.new(0.5, -32, 0, 18)
@@ -304,7 +302,6 @@ AvatarStroke.Color = Color3.fromRGB(168, 85, 247)
 AvatarStroke.Thickness = 2
 AvatarStroke.Parent = AvatarImage
 
--- Online Noktası
 local OnlineDot = Instance.new("Frame")
 OnlineDot.Size = UDim2.new(0, 14, 0, 14)
 OnlineDot.Position = UDim2.new(0.62, 0, 0, 58)
@@ -335,7 +332,7 @@ TagLabel.TextSize = 10
 TagLabel.Font = Enum.Font.Gotham
 TagLabel.Parent = ProfileCard
 
--- Sol alttaki "Chat..." Kutusu
+-- Sol alttaki Chat Kutusu
 local ChatBox = Instance.new("Frame")
 ChatBox.Size = UDim2.new(1, -24, 0, 38)
 ChatBox.Position = UDim2.new(0, 12, 0, 180)
@@ -368,7 +365,7 @@ ChatPlaceholder.TextXAlignment = Enum.TextXAlignment.Left
 ChatPlaceholder.Parent = ChatBox
 
 
--- SAĞ AKTİVİTE KUTUSU (Friend Activity)
+-- SAĞ AKTİVİTE KUTUSU (Arkadaş Aktivitesi ve Kendi Oyunumuz)
 local ActivityCard = Instance.new("Frame")
 ActivityCard.Size = UDim2.new(0.48, 0, 0, 235)
 ActivityCard.Position = UDim2.new(0.52, 0, 0, 148)
@@ -385,14 +382,13 @@ local FriendActivityTitle = Instance.new("TextLabel")
 FriendActivityTitle.Size = UDim2.new(1, -20, 0, 24)
 FriendActivityTitle.Position = UDim2.new(0, 12, 0, 10)
 FriendActivityTitle.BackgroundTransparency = 1
-FriendActivityTitle.Text = "Friend Activity"
+FriendActivityTitle.Text = "Arkadaş Aktivitesi" -- Türkçeleştirildi
 FriendActivityTitle.TextColor3 = Color3.fromRGB(220, 220, 240)
 FriendActivityTitle.TextSize = 12
 FriendActivityTitle.Font = Enum.Font.GothamBold
 FriendActivityTitle.TextXAlignment = Enum.TextXAlignment.Left
 FriendActivityTitle.Parent = ActivityCard
 
--- Arkadaş Listesi Alanı (Görseldeki koyu alt kartlar gibi)
 local FriendScroll = Instance.new("ScrollingFrame")
 FriendScroll.Size = UDim2.new(1, -20, 1, -42)
 FriendScroll.Position = UDim2.new(0, 10, 0, 35)
@@ -412,12 +408,55 @@ local function updateFriends()
         if child:IsA("Frame") then child:Destroy() end
     end
     
+    -- ÖNCE KENDİ OYUNUMUZU EN ÜSTE EKLEYELİM
+    local customGameFrame = Instance.new("Frame")
+    customGameFrame.Size = UDim2.new(1, 0, 0, 42)
+    customGameFrame.BackgroundColor3 = Color3.fromRGB(45, 25, 75) -- Farklı özel renk vurgusu
+    customGameFrame.BackgroundTransparency = 0.2
+    customGameFrame.BorderSizePixel = 0
+    customGameFrame.Parent = FriendScroll
+    
+    local cgCorner = Instance.new("UICorner")
+    cgCorner.CornerRadius = UDim.new(0, 8)
+    cgCorner.Parent = customGameFrame
+    
+    local cgIcon = Instance.new("TextLabel")
+    cgIcon.Size = UDim2.new(0, 28, 0, 28)
+    cgIcon.Position = UDim2.new(0, 8, 0.5, -14)
+    cgIcon.BackgroundTransparency = 1
+    cgIcon.Text = "⚡"
+    cgIcon.TextSize = 16
+    cgIcon.Parent = customGameFrame
+    
+    local cgName = Instance.new("TextLabel")
+    cgName.Size = UDim2.new(1, -45, 0, 16)
+    cgName.Position = UDim2.new(0, 42, 0, 5)
+    cgName.BackgroundTransparency = 1
+    cgName.Text = "Tantuni Project (Bizim Oyun)"
+    cgName.TextColor3 = Color3.fromRGB(255, 200, 255)
+    cgName.TextSize = 11
+    cgName.Font = Enum.Font.GothamBold
+    cgName.TextXAlignment = Enum.TextXAlignment.Left
+    cgName.Parent = customGameFrame
+    
+    local cgStatus = Instance.new("TextLabel")
+    cgStatus.Size = UDim2.new(1, -45, 0, 14)
+    cgStatus.Position = UDim2.new(0, 42, 0, 21)
+    cgStatus.BackgroundTransparency = 1
+    cgStatus.Text = "Aktif • Geliştirme Aşamasında"
+    cgStatus.TextColor3 = Color3.fromRGB(180, 150, 220)
+    cgStatus.TextSize = 10
+    cgStatus.Font = Enum.Font.Gotham
+    cgStatus.TextXAlignment = Enum.TextXAlignment.Left
+    cgStatus.Parent = customGameFrame
+
+    -- ARKADAŞLARI LİSTELE
     local success, pages = pcall(function()
         return LocalPlayer:GetFriendsOnline()
     end)
     
+    local count = 1
     if success and pages then
-        local count = 0
         for _, friend in ipairs(pages) do
             count = count + 1
             local fFrame = Instance.new("Frame")
@@ -431,7 +470,6 @@ local function updateFriends()
             fCorner.CornerRadius = UDim.new(0, 8)
             fCorner.Parent = fFrame
             
-            -- Arkadaş Avatarı (Küçük Daire)
             local fAvatar = Instance.new("ImageLabel")
             fAvatar.Size = UDim2.new(0, 28, 0, 28)
             fAvatar.Position = UDim2.new(0, 8, 0.5, -14)
@@ -468,14 +506,14 @@ local function updateFriends()
             fGame.TextXAlignment = Enum.TextXAlignment.Left
             fGame.Parent = fFrame
         end
-        FriendScroll.CanvasSize = UDim2.new(0, 0, 0, count * 48)
     end
+    FriendScroll.CanvasSize = UDim2.new(0, 0, 0, count * 48)
 end
 
 task.spawn(updateFriends)
 
 
--- 3. EN ALTTAKİ NAVİGASYON ŞERİDİ (Görseldeki ikon barı)
+-- 3. EN ALTTAKİ NAVİGASYON ŞERİDİ
 local BottomNav = Instance.new("Frame")
 BottomNav.Size = UDim2.new(0, 560, 0, 52)
 BottomNav.Position = UDim2.new(0.5, -280, 1, -62)
@@ -542,7 +580,7 @@ UserInputService.InputChanged:Connect(function(input)
     end
 end)
 
--- --- DELETE TUŞU İLE AÇ/KAPA (Alt bar ile birlikte) ---
+-- --- DELETE TUŞU İLE AÇ/KAPA ---
 local isOpen = true
 UserInputService.InputBegan:Connect(function(input, gameProcessed)
     if not gameProcessed and input.KeyCode == Enum.KeyCode.Delete then
