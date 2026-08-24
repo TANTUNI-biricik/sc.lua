@@ -1,4 +1,4 @@
--- TANTUNI Smart Activity UI (Aktif Oyun & Arkadaş Aktifliği)
+-- TANTUNI Smart Activity UI v2 (Aktif Oyun & Arkadaş Aktifliği)
 local CoreGui = game:GetService("CoreGui")
 local UserInputService = game:GetService("UserInputService")
 local Players = game:GetService("Players")
@@ -276,22 +276,22 @@ ActivityCorner.Parent = ActivityCard
 
 -- 1. Kısım: Aktif Oyun (Senin Oynadığın Oyun)
 local CurrentGameTitle = Instance.new("TextLabel")
-CurrentGameTitle.Size = UDim2.new(1, -20, 0, 22)
+CurrentGameTitle.Size = UDim2.new(1, -20, 0, 18)
 CurrentGameTitle.Position = UDim2.new(0, 15, 0, 12)
 CurrentGameTitle.BackgroundTransparency = 1
 CurrentGameTitle.Text = "Aktif Oyun"
 CurrentGameTitle.TextColor3 = Color3.fromRGB(190, 120, 255)
-CurrentGameTitle.TextSize = 13
+CurrentGameTitle.TextSize = 12
 CurrentGameTitle.Font = Enum.Font.GothamBold
 CurrentGameTitle.TextXAlignment = Enum.TextXAlignment.Left
 CurrentGameTitle.Parent = ActivityCard
 
 local CurrentGameName = Instance.new("TextLabel")
 CurrentGameName.Size = UDim2.new(1, -20, 0, 20)
-CurrentGameName.Position = UDim2.new(0, 15, 0, 32)
+CurrentGameName.Position = UDim2.new(0, 15, 0, 28)
 CurrentGameName.BackgroundTransparency = 1
 CurrentGameName.TextColor3 = Color3.fromRGB(255, 255, 255)
-CurrentGameName.TextSize = 12
+CurrentGameName.TextSize = 11
 CurrentGameName.Font = Enum.Font.GothamMedium
 CurrentGameName.TextXAlignment = Enum.TextXAlignment.Left
 CurrentGameName.Parent = ActivityCard
@@ -311,7 +311,7 @@ end)
 -- Ayırıcı Çizgi
 local Divider = Instance.new("Frame")
 Divider.Size = UDim2.new(1, -30, 0, 1)
-Divider.Position = UDim2.new(0, 15, 0, 62)
+Divider.Position = UDim2.new(0, 15, 0, 54)
 Divider.BackgroundColor3 = Color3.fromRGB(80, 50, 120)
 Divider.BackgroundTransparency = 0.5
 Divider.BorderSizePixel = 0
@@ -319,20 +319,20 @@ Divider.Parent = ActivityCard
 
 -- 2. Kısım: Arkadaş Aktifliği Başlığı
 local FriendActivityTitle = Instance.new("TextLabel")
-FriendActivityTitle.Size = UDim2.new(1, -20, 0, 22)
-FriendActivityTitle.Position = UDim2.new(0, 15, 0, 72)
+FriendActivityTitle.Size = UDim2.new(1, -20, 0, 18)
+FriendActivityTitle.Position = UDim2.new(0, 15, 0, 60)
 FriendActivityTitle.BackgroundTransparency = 1
 FriendActivityTitle.Text = "Arkadaş Aktifliği"
 FriendActivityTitle.TextColor3 = Color3.fromRGB(190, 120, 255)
-FriendActivityTitle.TextSize = 13
+FriendActivityTitle.TextSize = 12
 FriendActivityTitle.Font = Enum.Font.GothamBold
 FriendActivityTitle.TextXAlignment = Enum.TextXAlignment.Left
 FriendActivityTitle.Parent = ActivityCard
 
 -- Arkadaşların durumunu listeleyecek Scroll alanı
 local FriendScroll = Instance.new("ScrollingFrame")
-FriendScroll.Size = UDim2.new(1, -10, 0, 110)
-FriendScroll.Position = UDim2.new(0, 5, 0, 96)
+FriendScroll.Size = UDim2.new(1, -10, 0, 125)
+FriendScroll.Position = UDim2.new(0, 5, 0, 80)
 FriendScroll.BackgroundTransparency = 1
 FriendScroll.BorderSizePixel = 0
 FriendScroll.CanvasSize = UDim2.new(0, 0, 0, 0)
@@ -341,10 +341,10 @@ FriendScroll.Parent = ActivityCard
 
 local UIListLayout = Instance.new("UIListLayout")
 UIListLayout.SortOrder = Enum.SortOrder.LayoutOrder
-UIListLayout.Padding = UDim.new(0, 6)
+UIListLayout.Padding = UDim.new(0, 4)
 UIListLayout.Parent = FriendScroll
 
--- Arkadaşları tara ve yazdır
+-- Arkadaşları tara ve oyunlarıyla beraber listele
 local function updateFriends()
     for _, child in ipairs(FriendScroll:GetChildren()) do
         if child:IsA("Frame") then child:Destroy() end
@@ -359,12 +359,19 @@ local function updateFriends()
         for _, friend in ipairs(pages) do
             count = count + 1
             local fFrame = Instance.new("Frame")
-            fFrame.Size = UDim2.new(1, -5, 0, 28)
-            fFrame.BackgroundTransparency = 1
+            fFrame.Size = UDim2.new(1, -5, 0, 32)
+            fFrame.BackgroundColor3 = Color3.fromRGB(40, 22, 65)
+            fFrame.BackgroundTransparency = 0.4
+            fFrame.BorderSizePixel = 0
             fFrame.Parent = FriendScroll
             
+            local fCorner = Instance.new("UICorner")
+            fCorner.CornerRadius = UDim.new(0, 6)
+            fCorner.Parent = fFrame
+            
             local fName = Instance.new("TextLabel")
-            fName.Size = UDim2.new(0.45, 0, 1, 0)
+            fName.Size = UDim2.new(1, -10, 0, 14)
+            fName.Position = UDim2.new(0, 5, 0, 2)
             fName.BackgroundTransparency = 1
             fName.Text = friend.UserName
             fName.TextColor3 = Color3.fromRGB(240, 240, 255)
@@ -374,17 +381,17 @@ local function updateFriends()
             fName.Parent = fFrame
             
             local fGame = Instance.new("TextLabel")
-            fGame.Size = UDim2.new(0.55, 0, 1, 0)
-            fGame.Position = UDim2.new(0.45, 0, 0, 0)
+            fGame.Size = UDim2.new(1, -10, 0, 14)
+            fGame.Position = UDim2.new(0, 5, 0, 16)
             fGame.BackgroundTransparency = 1
             fGame.Text = friend.Location or "Oyunda"
-            fGame.TextColor3 = Color3.fromRGB(170, 160, 190)
+            fGame.TextColor3 = Color3.fromRGB(180, 160, 210)
             fGame.TextSize = 10
             fGame.Font = Enum.Font.Gotham
-            fGame.TextXAlignment = Enum.TextXAlignment.Right
+            fGame.TextXAlignment = Enum.TextXAlignment.Left
             fGame.Parent = fFrame
         end
-        FriendScroll.CanvasSize = UDim2.new(0, 0, 0, count * 34)
+        FriendScroll.CanvasSize = UDim2.new(0, 0, 0, count * 36)
     end
 end
 
