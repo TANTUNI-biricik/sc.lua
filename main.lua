@@ -1,7 +1,6 @@
--- TANTUNI Novoline Style UI | Mor Tema & Sürüklenebilir
+-- TANTUNI Multi-Purpose Menu | Dinamik Hesap & TANTUNI Başlıklı
 local CoreGui = game:GetService("CoreGui")
 local UserInputService = game:GetService("UserInputService")
-local TweenService = game:GetService("TweenService")
 local Players = game:GetService("Players")
 local LocalPlayer = Players.LocalPlayer
 
@@ -9,7 +8,7 @@ local LocalPlayer = Players.LocalPlayer
 if CoreGui:FindFirstChild("TantuniLoader") then CoreGui.TantuniLoader:Destroy() end
 if CoreGui:FindFirstChild("TantuniMenu") then CoreGui.TantuniMenu:Destroy() end
 
--- 1. LOADER (YÜKLEME EKRANI)
+-- 1. LOADER (YÜKLEME EKRANI - TANTUNI İsimli)
 local LoaderGui = Instance.new("ScreenGui")
 LoaderGui.Name = "TantuniLoader"
 LoaderGui.Parent = CoreGui
@@ -45,10 +44,10 @@ local LoaderSub = Instance.new("TextLabel")
 LoaderSub.Size = UDim2.new(1, -40, 0, 20)
 LoaderSub.Position = UDim2.new(0, 20, 0, 45)
 LoaderSub.BackgroundTransparency = 1
-LoaderSub.Text = "Novoline"
-LoaderSub.TextColor3 = Color3.fromRGB(150, 150, 170)
+LoaderSub.Text = "T A N T U N I" -- Burası değiştirildi
+LoaderSub.TextColor3 = Color3.fromRGB(180, 100, 255)
 LoaderSub.TextSize = 12
-LoaderSub.Font = Enum.Font.Gotham
+LoaderSub.Font = Enum.Font.GothamBold
 LoaderSub.TextXAlignment = Enum.TextXAlignment.Left
 LoaderSub.Parent = LoaderFrame
 
@@ -76,7 +75,7 @@ BarBgCorner.Parent = BarBg
 
 local BarFill = Instance.new("Frame")
 BarFill.Size = UDim2.new(0, 0, 1, 0)
-BarFill.BackgroundColor3 = Color3.fromRGB(147, 51, 234) -- Mor Tonu
+BarFill.BackgroundColor3 = Color3.fromRGB(147, 51, 234)
 BarFill.BorderSizePixel = 0
 BarFill.Parent = BarBg
 
@@ -92,7 +91,7 @@ end
 task.wait(0.3)
 LoaderGui:Destroy()
 
--- 2. ANA MENÜ (NOVOLINE TARZI + MOR DETAYLAR)
+-- 2. ANA MENÜ
 local MenuGui = Instance.new("ScreenGui")
 MenuGui.Name = "TantuniMenu"
 MenuGui.Parent = CoreGui
@@ -109,16 +108,16 @@ MainCorner.CornerRadius = UDim.new(0, 12)
 MainCorner.Parent = MainContainer
 
 local MainStroke = Instance.new("UIStroke")
-MainStroke.Color = Color3.fromRGB(110, 40, 180) -- Mor Kenarlık
+MainStroke.Color = Color3.fromRGB(110, 40, 180)
 MainStroke.Transparency = 0.4
 MainStroke.Parent = MainContainer
 
--- Üst Bilgi Satırı
+-- Üst Bilgi Satırı (Dinamik Hesap İsmi)
 local WelcomeText = Instance.new("TextLabel")
 WelcomeText.Size = UDim2.new(1, -150, 0, 30)
 WelcomeText.Position = UDim2.new(0, 25, 0, 20)
 WelcomeText.BackgroundTransparency = 1
-WelcomeText.Text = "Welcome home, " .. LocalPlayer.Name
+WelcomeText.Text = "Welcome home, " .. LocalPlayer.Name -- Oyuna kim girerse onun adı yazar
 WelcomeText.TextColor3 = Color3.fromRGB(255, 255, 255)
 WelcomeText.TextSize = 18
 WelcomeText.Font = Enum.Font.GothamBold
@@ -129,14 +128,14 @@ local SubText = Instance.new("TextLabel")
 SubText.Size = UDim2.new(1, -150, 0, 20)
 SubText.Position = UDim2.new(0, 25, 0, 45)
 SubText.BackgroundTransparency = 1
-SubText.Text = "Novoline"
-SubText.TextColor3 = Color3.fromRGB(140, 140, 160)
+SubText.Text = "T A N T U N I" -- Burası da TANTUNI yapıldı
+SubText.TextColor3 = Color3.fromRGB(180, 100, 255)
 SubText.TextSize = 12
-SubText.Font = Enum.Font.Gotham
+SubText.Font = Enum.Font.GothamBold
 SubText.TextXAlignment = Enum.TextXAlignment.Left
 SubText.Parent = MainContainer
 
--- Üst Panel (Fly / ESP Kutucukları)
+-- Üst Panel (Fly / ESP)
 local TopPanel = Instance.new("Frame")
 TopPanel.Size = UDim2.new(1, -50, 0, 75)
 TopPanel.Position = UDim2.new(0, 25, 0, 80)
@@ -148,7 +147,7 @@ local TopPanelCorner = Instance.new("UICorner")
 TopPanelCorner.CornerRadius = UDim.new(0, 10)
 TopPanelCorner.Parent = TopPanel
 
--- Fly Butonu Kutusu
+-- Fly Kutusu
 local FlyBox = Instance.new("Frame")
 FlyBox.Size = UDim2.new(0.47, 0, 1, -16)
 FlyBox.Position = UDim2.new(0, 8, 0, 8)
@@ -180,7 +179,7 @@ FlySub.TextSize = 11
 FlySub.Font = Enum.Font.Gotham
 FlySub.Parent = FlyBox
 
--- ESP Butonu Kutusu
+-- ESP Kutusu
 local EspBox = Instance.new("Frame")
 EspBox.Size = UDim2.new(0.47, 0, 1, -16)
 EspBox.Position = UDim2.new(0.53, -4, 0, 8)
@@ -212,7 +211,7 @@ EspSub.TextSize = 11
 EspSub.Font = Enum.Font.Gotham
 EspSub.Parent = EspBox
 
--- Sol Profil Kartı
+-- Sol Profil Kartı (Dinamik İsim)
 local ProfileCard = Instance.new("Frame")
 ProfileCard.Size = UDim2.new(0.47, 0, 0, 210)
 ProfileCard.Position = UDim2.new(0, 25, 0, 170)
@@ -227,7 +226,7 @@ ProfileCorner.Parent = ProfileCard
 local AvatarCircle = Instance.new("Frame")
 AvatarCircle.Size = UDim2.new(0, 70, 0, 70)
 AvatarCircle.Position = UDim2.new(0.5, -35, 0, 25)
-AvatarCircle.BackgroundColor3 = Color3.fromRGB(130, 50, 210) -- Mor Halkas
+AvatarCircle.BackgroundColor3 = Color3.fromRGB(130, 50, 210)
 AvatarCircle.BorderSizePixel = 0
 AvatarCircle.Parent = ProfileCard
 
@@ -278,7 +277,7 @@ ActivityTitle.Font = Enum.Font.GothamBold
 ActivityTitle.TextXAlignment = Enum.TextXAlignment.Left
 ActivityTitle.Parent = ActivityCard
 
--- --- SÜRÜKLE-BIRAK (TÜM PENCERE İÇİN) ---
+-- --- SÜRÜKLE-BIRAK ---
 local dragging, dragInput, mousePos, framePos
 
 MainContainer.InputBegan:Connect(function(input)
@@ -291,7 +290,7 @@ MainContainer.InputBegan:Connect(function(input)
             if input.UserInputState == Enum.UserInputState.End then
                 dragging = false
             end
-        end)
+        end
     end
 end)
 
