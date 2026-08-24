@@ -1,4 +1,4 @@
--- TANTUNI Multi-Purpose Menu | Dinamik Hesap & TANTUNI Başlıklı
+-- TANTUNI Glassmorphism Mor Theme UI
 local CoreGui = game:GetService("CoreGui")
 local UserInputService = game:GetService("UserInputService")
 local Players = game:GetService("Players")
@@ -8,7 +8,7 @@ local LocalPlayer = Players.LocalPlayer
 if CoreGui:FindFirstChild("TantuniLoader") then CoreGui.TantuniLoader:Destroy() end
 if CoreGui:FindFirstChild("TantuniMenu") then CoreGui.TantuniMenu:Destroy() end
 
--- 1. LOADER (YÜKLEME EKRANI - TANTUNI İsimli)
+-- 1. LOADER (YÜKLEME EKRANI - Cam Moru & TANTUNI)
 local LoaderGui = Instance.new("ScreenGui")
 LoaderGui.Name = "TantuniLoader"
 LoaderGui.Parent = CoreGui
@@ -16,7 +16,8 @@ LoaderGui.Parent = CoreGui
 local LoaderFrame = Instance.new("Frame")
 LoaderFrame.Size = UDim2.new(0, 420, 0, 160)
 LoaderFrame.Position = UDim2.new(0.5, -210, 0.5, -80)
-LoaderFrame.BackgroundColor3 = Color3.fromRGB(15, 15, 20)
+LoaderFrame.BackgroundColor3 = Color3.fromRGB(22, 16, 35) -- Morumsu arkaplan
+LoaderFrame.BackgroundTransparency = 0.25 -- Cam efekti şeffaflığı
 LoaderFrame.BorderSizePixel = 0
 LoaderFrame.Parent = LoaderGui
 
@@ -25,8 +26,8 @@ LoaderCorner.CornerRadius = UDim.new(0, 12)
 LoaderCorner.Parent = LoaderFrame
 
 local LoaderStroke = Instance.new("UIStroke")
-LoaderStroke.Color = Color3.fromRGB(120, 60, 200)
-LoaderStroke.Transparency = 0.5
+LoaderStroke.Color = Color3.fromRGB(160, 80, 255)
+LoaderStroke.Transparency = 0.3
 LoaderStroke.Parent = LoaderFrame
 
 local LoaderTitle = Instance.new("TextLabel")
@@ -44,8 +45,8 @@ local LoaderSub = Instance.new("TextLabel")
 LoaderSub.Size = UDim2.new(1, -40, 0, 20)
 LoaderSub.Position = UDim2.new(0, 20, 0, 45)
 LoaderSub.BackgroundTransparency = 1
-LoaderSub.Text = "T A N T U N I" -- Burası değiştirildi
-LoaderSub.TextColor3 = Color3.fromRGB(180, 100, 255)
+LoaderSub.Text = "T A N T U N I"
+LoaderSub.TextColor3 = Color3.fromRGB(190, 120, 255)
 LoaderSub.TextSize = 12
 LoaderSub.Font = Enum.Font.GothamBold
 LoaderSub.TextXAlignment = Enum.TextXAlignment.Left
@@ -65,7 +66,7 @@ StatusText.Parent = LoaderFrame
 local BarBg = Instance.new("Frame")
 BarBg.Size = UDim2.new(1, -40, 0, 6)
 BarBg.Position = UDim2.new(0, 20, 0, 115)
-BarBg.BackgroundColor3 = Color3.fromRGB(30, 30, 40)
+BarBg.BackgroundColor3 = Color3.fromRGB(40, 25, 60)
 BarBg.BorderSizePixel = 0
 BarBg.Parent = LoaderFrame
 
@@ -75,7 +76,7 @@ BarBgCorner.Parent = BarBg
 
 local BarFill = Instance.new("Frame")
 BarFill.Size = UDim2.new(0, 0, 1, 0)
-BarFill.BackgroundColor3 = Color3.fromRGB(147, 51, 234)
+BarFill.BackgroundColor3 = Color3.fromRGB(168, 85, 247)
 BarFill.BorderSizePixel = 0
 BarFill.Parent = BarBg
 
@@ -91,7 +92,7 @@ end
 task.wait(0.3)
 LoaderGui:Destroy()
 
--- 2. ANA MENÜ
+-- 2. ANA MENÜ (Cam Moru Efektli)
 local MenuGui = Instance.new("ScreenGui")
 MenuGui.Name = "TantuniMenu"
 MenuGui.Parent = CoreGui
@@ -99,7 +100,8 @@ MenuGui.Parent = CoreGui
 local MainContainer = Instance.new("Frame")
 MainContainer.Size = UDim2.new(0, 650, 0, 420)
 MainContainer.Position = UDim2.new(0.5, -325, 0.5, -210)
-MainContainer.BackgroundColor3 = Color3.fromRGB(12, 12, 16)
+MainContainer.BackgroundColor3 = Color3.fromRGB(18, 12, 28) -- Şık koyu mor-cam tonu
+MainContainer.BackgroundTransparency = 0.2 -- Hafif cam şeffaflığı
 MainContainer.BorderSizePixel = 0
 MainContainer.Parent = MenuGui
 
@@ -108,16 +110,16 @@ MainCorner.CornerRadius = UDim.new(0, 12)
 MainCorner.Parent = MainContainer
 
 local MainStroke = Instance.new("UIStroke")
-MainStroke.Color = Color3.fromRGB(110, 40, 180)
-MainStroke.Transparency = 0.4
+MainStroke.Color = Color3.fromRGB(160, 70, 255) -- Canlı mor çerçeve
+MainStroke.Transparency = 0.3
 MainStroke.Parent = MainContainer
 
--- Üst Bilgi Satırı (Dinamik Hesap İsmi)
+-- Üst Bilgi Satırı (Dinamik İsim)
 local WelcomeText = Instance.new("TextLabel")
 WelcomeText.Size = UDim2.new(1, -150, 0, 30)
 WelcomeText.Position = UDim2.new(0, 25, 0, 20)
 WelcomeText.BackgroundTransparency = 1
-WelcomeText.Text = "Welcome home, " .. LocalPlayer.Name -- Oyuna kim girerse onun adı yazar
+WelcomeText.Text = "Welcome home, " .. LocalPlayer.Name
 WelcomeText.TextColor3 = Color3.fromRGB(255, 255, 255)
 WelcomeText.TextSize = 18
 WelcomeText.Font = Enum.Font.GothamBold
@@ -128,8 +130,8 @@ local SubText = Instance.new("TextLabel")
 SubText.Size = UDim2.new(1, -150, 0, 20)
 SubText.Position = UDim2.new(0, 25, 0, 45)
 SubText.BackgroundTransparency = 1
-SubText.Text = "T A N T U N I" -- Burası da TANTUNI yapıldı
-SubText.TextColor3 = Color3.fromRGB(180, 100, 255)
+SubText.Text = "T A N T U N I"
+SubText.TextColor3 = Color3.fromRGB(190, 120, 255)
 SubText.TextSize = 12
 SubText.Font = Enum.Font.GothamBold
 SubText.TextXAlignment = Enum.TextXAlignment.Left
@@ -139,7 +141,8 @@ SubText.Parent = MainContainer
 local TopPanel = Instance.new("Frame")
 TopPanel.Size = UDim2.new(1, -50, 0, 75)
 TopPanel.Position = UDim2.new(0, 25, 0, 80)
-TopPanel.BackgroundColor3 = Color3.fromRGB(20, 20, 28)
+TopPanel.BackgroundColor3 = Color3.fromRGB(30, 20, 45)
+TopPanel.BackgroundTransparency = 0.3
 TopPanel.BorderSizePixel = 0
 TopPanel.Parent = MainContainer
 
@@ -151,7 +154,8 @@ TopPanelCorner.Parent = TopPanel
 local FlyBox = Instance.new("Frame")
 FlyBox.Size = UDim2.new(0.47, 0, 1, -16)
 FlyBox.Position = UDim2.new(0, 8, 0, 8)
-FlyBox.BackgroundColor3 = Color3.fromRGB(28, 28, 38)
+FlyBox.BackgroundColor3 = Color3.fromRGB(42, 28, 65)
+FlyBox.BackgroundTransparency = 0.2
 FlyBox.BorderSizePixel = 0
 FlyBox.Parent = TopPanel
 
@@ -174,7 +178,7 @@ FlySub.Size = UDim2.new(1, 0, 0, 20)
 FlySub.Position = UDim2.new(0, 0, 0, 32)
 FlySub.BackgroundTransparency = 1
 FlySub.Text = "Kapalı"
-FlySub.TextColor3 = Color3.fromRGB(150, 150, 160)
+FlySub.TextColor3 = Color3.fromRGB(180, 170, 200)
 FlySub.TextSize = 11
 FlySub.Font = Enum.Font.Gotham
 FlySub.Parent = FlyBox
@@ -183,7 +187,8 @@ FlySub.Parent = FlyBox
 local EspBox = Instance.new("Frame")
 EspBox.Size = UDim2.new(0.47, 0, 1, -16)
 EspBox.Position = UDim2.new(0.53, -4, 0, 8)
-EspBox.BackgroundColor3 = Color3.fromRGB(28, 28, 38)
+EspBox.BackgroundColor3 = Color3.fromRGB(42, 28, 65)
+EspBox.BackgroundTransparency = 0.2
 EspBox.BorderSizePixel = 0
 EspBox.Parent = TopPanel
 
@@ -206,16 +211,17 @@ EspSub.Size = UDim2.new(1, 0, 0, 20)
 EspSub.Position = UDim2.new(0, 0, 0, 32)
 EspSub.BackgroundTransparency = 1
 EspSub.Text = "Panel"
-EspSub.TextColor3 = Color3.fromRGB(150, 150, 160)
+EspSub.TextColor3 = Color3.fromRGB(180, 170, 200)
 EspSub.TextSize = 11
 EspSub.Font = Enum.Font.Gotham
 EspSub.Parent = EspBox
 
--- Sol Profil Kartı (Dinamik İsim)
+-- Sol Profil Kartı
 local ProfileCard = Instance.new("Frame")
 ProfileCard.Size = UDim2.new(0.47, 0, 0, 210)
 ProfileCard.Position = UDim2.new(0, 25, 0, 170)
-ProfileCard.BackgroundColor3 = Color3.fromRGB(20, 20, 28)
+ProfileCard.BackgroundColor3 = Color3.fromRGB(30, 20, 45)
+ProfileCard.BackgroundTransparency = 0.3
 ProfileCard.BorderSizePixel = 0
 ProfileCard.Parent = MainContainer
 
@@ -226,7 +232,7 @@ ProfileCorner.Parent = ProfileCard
 local AvatarCircle = Instance.new("Frame")
 AvatarCircle.Size = UDim2.new(0, 70, 0, 70)
 AvatarCircle.Position = UDim2.new(0.5, -35, 0, 25)
-AvatarCircle.BackgroundColor3 = Color3.fromRGB(130, 50, 210)
+AvatarCircle.BackgroundColor3 = Color3.fromRGB(160, 70, 255)
 AvatarCircle.BorderSizePixel = 0
 AvatarCircle.Parent = ProfileCard
 
@@ -249,7 +255,7 @@ TagLabel.Size = UDim2.new(1, 0, 0, 20)
 TagLabel.Position = UDim2.new(0, 0, 0, 125)
 TagLabel.BackgroundTransparency = 1
 TagLabel.Text = "@" .. LocalPlayer.Name
-TagLabel.TextColor3 = Color3.fromRGB(140, 140, 160)
+TagLabel.TextColor3 = Color3.fromRGB(180, 170, 200)
 TagLabel.TextSize = 11
 TagLabel.Font = Enum.Font.Gotham
 TagLabel.Parent = ProfileCard
@@ -258,7 +264,8 @@ TagLabel.Parent = ProfileCard
 local ActivityCard = Instance.new("Frame")
 ActivityCard.Size = UDim2.new(0.47, 0, 0, 210)
 ActivityCard.Position = UDim2.new(0.53, -4, 0, 170)
-ActivityCard.BackgroundColor3 = Color3.fromRGB(20, 20, 28)
+ActivityCard.BackgroundColor3 = Color3.fromRGB(30, 20, 45)
+ActivityCard.BackgroundTransparency = 0.3
 ActivityCard.BorderSizePixel = 0
 ActivityCard.Parent = MainContainer
 
@@ -290,7 +297,7 @@ MainContainer.InputBegan:Connect(function(input)
             if input.UserInputState == Enum.UserInputState.End then
                 dragging = false
             end
-        end
+        end)
     end
 end)
 
