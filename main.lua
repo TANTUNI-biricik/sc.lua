@@ -1,4 +1,4 @@
--- TANTUNI Glassmorphism Mor Theme UI
+-- TANTUNI Glassmorphism Mor Theme UI & Gerçek Profil Resmi
 local CoreGui = game:GetService("CoreGui")
 local UserInputService = game:GetService("UserInputService")
 local Players = game:GetService("Players")
@@ -8,7 +8,7 @@ local LocalPlayer = Players.LocalPlayer
 if CoreGui:FindFirstChild("TantuniLoader") then CoreGui.TantuniLoader:Destroy() end
 if CoreGui:FindFirstChild("TantuniMenu") then CoreGui.TantuniMenu:Destroy() end
 
--- 1. LOADER (YÜKLEME EKRANI - Cam Moru & TANTUNI)
+-- 1. LOADER (YÜKLEME EKRANI)
 local LoaderGui = Instance.new("ScreenGui")
 LoaderGui.Name = "TantuniLoader"
 LoaderGui.Parent = CoreGui
@@ -16,8 +16,8 @@ LoaderGui.Parent = CoreGui
 local LoaderFrame = Instance.new("Frame")
 LoaderFrame.Size = UDim2.new(0, 420, 0, 160)
 LoaderFrame.Position = UDim2.new(0.5, -210, 0.5, -80)
-LoaderFrame.BackgroundColor3 = Color3.fromRGB(22, 16, 35) -- Morumsu arkaplan
-LoaderFrame.BackgroundTransparency = 0.25 -- Cam efekti şeffaflığı
+LoaderFrame.BackgroundColor3 = Color3.fromRGB(35, 18, 55) -- Morumsu Cam Arkaplan
+LoaderFrame.BackgroundTransparency = 0.2
 LoaderFrame.BorderSizePixel = 0
 LoaderFrame.Parent = LoaderGui
 
@@ -66,7 +66,7 @@ StatusText.Parent = LoaderFrame
 local BarBg = Instance.new("Frame")
 BarBg.Size = UDim2.new(1, -40, 0, 6)
 BarBg.Position = UDim2.new(0, 20, 0, 115)
-BarBg.BackgroundColor3 = Color3.fromRGB(40, 25, 60)
+BarBg.BackgroundColor3 = Color3.fromRGB(50, 25, 80)
 BarBg.BorderSizePixel = 0
 BarBg.Parent = LoaderFrame
 
@@ -100,8 +100,8 @@ MenuGui.Parent = CoreGui
 local MainContainer = Instance.new("Frame")
 MainContainer.Size = UDim2.new(0, 650, 0, 420)
 MainContainer.Position = UDim2.new(0.5, -325, 0.5, -210)
-MainContainer.BackgroundColor3 = Color3.fromRGB(18, 12, 28) -- Şık koyu mor-cam tonu
-MainContainer.BackgroundTransparency = 0.2 -- Hafif cam şeffaflığı
+MainContainer.BackgroundColor3 = Color3.fromRGB(28, 15, 45) -- Şık mor-cam arkaplan
+MainContainer.BackgroundTransparency = 0.25
 MainContainer.BorderSizePixel = 0
 MainContainer.Parent = MenuGui
 
@@ -110,11 +110,11 @@ MainCorner.CornerRadius = UDim.new(0, 12)
 MainCorner.Parent = MainContainer
 
 local MainStroke = Instance.new("UIStroke")
-MainStroke.Color = Color3.fromRGB(160, 70, 255) -- Canlı mor çerçeve
+MainStroke.Color = Color3.fromRGB(160, 70, 255)
 MainStroke.Transparency = 0.3
 MainStroke.Parent = MainContainer
 
--- Üst Bilgi Satırı (Dinamik İsim)
+-- Üst Bilgi Satırı
 local WelcomeText = Instance.new("TextLabel")
 WelcomeText.Size = UDim2.new(1, -150, 0, 30)
 WelcomeText.Position = UDim2.new(0, 25, 0, 20)
@@ -141,7 +141,7 @@ SubText.Parent = MainContainer
 local TopPanel = Instance.new("Frame")
 TopPanel.Size = UDim2.new(1, -50, 0, 75)
 TopPanel.Position = UDim2.new(0, 25, 0, 80)
-TopPanel.BackgroundColor3 = Color3.fromRGB(30, 20, 45)
+TopPanel.BackgroundColor3 = Color3.fromRGB(40, 22, 65)
 TopPanel.BackgroundTransparency = 0.3
 TopPanel.BorderSizePixel = 0
 TopPanel.Parent = MainContainer
@@ -154,7 +154,7 @@ TopPanelCorner.Parent = TopPanel
 local FlyBox = Instance.new("Frame")
 FlyBox.Size = UDim2.new(0.47, 0, 1, -16)
 FlyBox.Position = UDim2.new(0, 8, 0, 8)
-FlyBox.BackgroundColor3 = Color3.fromRGB(42, 28, 65)
+FlyBox.BackgroundColor3 = Color3.fromRGB(55, 30, 85)
 FlyBox.BackgroundTransparency = 0.2
 FlyBox.BorderSizePixel = 0
 FlyBox.Parent = TopPanel
@@ -187,7 +187,7 @@ FlySub.Parent = FlyBox
 local EspBox = Instance.new("Frame")
 EspBox.Size = UDim2.new(0.47, 0, 1, -16)
 EspBox.Position = UDim2.new(0.53, -4, 0, 8)
-EspBox.BackgroundColor3 = Color3.fromRGB(42, 28, 65)
+EspBox.BackgroundColor3 = Color3.fromRGB(55, 30, 85)
 EspBox.BackgroundTransparency = 0.2
 EspBox.BorderSizePixel = 0
 EspBox.Parent = TopPanel
@@ -220,7 +220,7 @@ EspSub.Parent = EspBox
 local ProfileCard = Instance.new("Frame")
 ProfileCard.Size = UDim2.new(0.47, 0, 0, 210)
 ProfileCard.Position = UDim2.new(0, 25, 0, 170)
-ProfileCard.BackgroundColor3 = Color3.fromRGB(30, 20, 45)
+ProfileCard.BackgroundColor3 = Color3.fromRGB(40, 22, 65)
 ProfileCard.BackgroundTransparency = 0.3
 ProfileCard.BorderSizePixel = 0
 ProfileCard.Parent = MainContainer
@@ -229,16 +229,17 @@ local ProfileCorner = Instance.new("UICorner")
 ProfileCorner.CornerRadius = UDim.new(0, 10)
 ProfileCorner.Parent = ProfileCard
 
-local AvatarCircle = Instance.new("Frame")
-AvatarCircle.Size = UDim2.new(0, 70, 0, 70)
-AvatarCircle.Position = UDim2.new(0.5, -35, 0, 25)
-AvatarCircle.BackgroundColor3 = Color3.fromRGB(160, 70, 255)
-AvatarCircle.BorderSizePixel = 0
-AvatarCircle.Parent = ProfileCard
+-- GERÇEK ROBLOX PROFİL RESMİ (Avatar Headshot)
+local AvatarImage = Instance.new("ImageLabel")
+AvatarImage.Size = UDim2.new(0, 70, 0, 70)
+AvatarImage.Position = UDim2.new(0.5, -35, 0, 25)
+AvatarImage.BackgroundTransparency = 1
+AvatarImage.Image = Players:GetUserThumbnailAsync(LocalPlayer.UserId, Enum.ThumbnailType.HeadShot, Enum.ThumbnailSize.Size150x150)
+AvatarImage.Parent = ProfileCard
 
 local AvatarCorner = Instance.new("UICorner")
 AvatarCorner.CornerRadius = UDim.new(1, 0)
-AvatarCorner.Parent = AvatarCircle
+AvatarCorner.Parent = AvatarImage
 
 local NameLabel = Instance.new("TextLabel")
 NameLabel.Size = UDim2.new(1, 0, 0, 25)
@@ -264,7 +265,7 @@ TagLabel.Parent = ProfileCard
 local ActivityCard = Instance.new("Frame")
 ActivityCard.Size = UDim2.new(0.47, 0, 0, 210)
 ActivityCard.Position = UDim2.new(0.53, -4, 0, 170)
-ActivityCard.BackgroundColor3 = Color3.fromRGB(30, 20, 45)
+ActivityCard.BackgroundColor3 = Color3.fromRGB(40, 22, 65)
 ActivityCard.BackgroundTransparency = 0.3
 ActivityCard.BorderSizePixel = 0
 ActivityCard.Parent = MainContainer
