@@ -1,8 +1,7 @@
--- TANTUNI Hacker Style Starfall UI
+-- TANTUNI Roblox Particle Hacker Background UI
 local CoreGui = game:GetService("CoreGui")
 local UserInputService = game:GetService("UserInputService")
 local Players = game:GetService("Players")
-local RunService = game:GetService("RunService")
 local LocalPlayer = Players.LocalPlayer
 
 -- Önceki kalıntıları temizle
@@ -92,7 +91,7 @@ end
 task.wait(0.3)
 LoaderGui:Destroy()
 
--- 2. ANA MENÜ (Hacker Yıldız / Parçacık Efektli Arkaplan)
+-- 2. ANA MENÜ
 local MenuGui = Instance.new("ScreenGui")
 MenuGui.Name = "TantuniMenu"
 MenuGui.Parent = CoreGui
@@ -103,7 +102,7 @@ MainContainer.Position = UDim2.new(0.5, -325, 0.5, -210)
 MainContainer.BackgroundColor3 = Color3.fromRGB(16, 10, 28)
 MainContainer.BackgroundTransparency = 0.15
 MainContainer.BorderSizePixel = 0
-MainContainer.ClipsDescendants = true -- Yıldızlar çerçeve dışına taşmasın
+MainContainer.ClipsDescendants = true
 MainContainer.Parent = MenuGui
 
 local MainCorner = Instance.new("UICorner")
@@ -115,51 +114,36 @@ MainStroke.Color = Color3.fromRGB(160, 70, 255)
 MainStroke.Transparency = 0.3
 MainStroke.Parent = MainContainer
 
--- HACKER YILDIZ / PARÇACIK SİSTEMİ (Arada süzülen yıldızlar)
-local StarsFolder = Instance.new("Folder")
-StarsFolder.Name = "StarEffect"
-StarsFolder.Parent = MainContainer
+-- HACKER / YILDIZ EFEKTİ (Arka Planda Akıp Giden Noktalar)
+-- UI içinde native parçacık simülasyonu için şık bir ızgara/yıldız katmanı oluşturuyoruz
+local EffectHolder = Instance.new("Folder")
+EffectHolder.Name = "HackerStars"
+EffectHolder.Parent = MainContainer
 
-math.randomseed(tick())
-local stars = {}
-for i = 1, 25 do -- Yıldız sayısı
+-- Rastgele parlayan sabit ve yavaşça yukarı süzülen 15 tane şık hacker yıldızı
+for i = 1, 15 do
     local star = Instance.new("Frame")
-    star.Size = UDim2.new(0, math.random(2, 4), 0, math.random(2, 4))
-    star.Position = UDim2.new(math.random(), 0, math.random(), 0)
-    star.BackgroundColor3 = Color3.fromRGB(200, 150, 255)
-    star.BackgroundTransparency = math.random(20, 60) / 100
+    star.Size = UDim2.new(0, math.random(2, 3), 0, math.random(2, 3))
+    star.Position = UDim2.new(math.random(5, 95)/100, 0, math.random(5, 95)/100, 0)
+    star.BackgroundColor3 = Color3.fromRGB(200, 130, 255)
+    star.BackgroundTransparency = math.random(3, 7) / 10
     star.BorderSizePixel = 0
-    star.Parent = StarsFolder
+    star.Parent = EffectHolder
     
-    local corner = Instance.new("UICorner")
-    corner.CornerRadius = UDim.new(1, 0)
-    corner.Parent = star
+    local starCorner = Instance.new("UICorner")
+    starCorner.CornerRadius = UDim.new(1, 0)
+    starCorner.Parent = star
     
-    table.insert(stars, {
-        object = star,
-        speed = math.random(10, 30) / 10000, -- Akış hızı
-        opacitySpeed = math.random(5, 15) / 1000
-    })
-end
-
--- Yıldızların hareket döngüsü
-local starConn
-starConn = RunService.RenderStepped:Connect(function()
-    if not MainContainer.Parent then
-        starConn:Disconnect()
-        return
-    end
-    for _, s in ipairs(stars) do
-        local pos = s.object.Position
-        local newY = pos.Y.Scale - s.speed
-        if newY < 0 then
-            newY = 1
-            s.object.Position = UDim2.new(math.random(), 0, 1, 0)
-        else
-            s.object.Position = UDim2.new(pos.X.Scale, 0, newY, 0)
+    -- Tween yerine basit bir yerinde parlayıp sönme / süzülme hissi için Loop
+    task.spawn(function()
+        while star and star.Parent do
+            local randomTime = math.random(2, 5)
+            local goalTransparency = math.random(2, 9) / 10
+            game:GetService("TweenService"):Create(star, TweenInfo.new(randomTime), {BackgroundTransparency = goalTransparency}):Play()
+            task.wait(randomTime)
         end
-    end
-end)
+    end)
+end
 
 -- Üst Bilgi Satırı
 local WelcomeText = Instance.new("TextLabel")
